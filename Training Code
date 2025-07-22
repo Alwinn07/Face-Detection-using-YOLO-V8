@@ -1,0 +1,26 @@
+#run this code in google collab
+
+!nvidia-smi
+
+!pip install ultralytics
+
+from ultralytics import YOLO
+import os
+from IPython.display import Image, display
+from IPython import display
+display.clear_output()
+!yolo checks
+
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="VI7uBIPplmbVUI8w3RaY")
+project = rf.workspace("alwin-ctnbp").project("face-k9nrl")
+version = project.version(1)
+dataset = version.download("yolov8")
+
+yolo task=detect mode=train model=/content/yolov8s.pt data=/content/FACE_1/data.yaml epochs=30 imgsz=640
+     
+%cd /content/FACE_1
+
+!yolo task=detect mode=train model=yolov8s.pt data={dataset.location}/data.yaml epochs=25 imgsz=640 plots=True
